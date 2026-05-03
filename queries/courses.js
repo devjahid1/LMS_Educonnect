@@ -1,127 +1,124 @@
-import "server-only";
-
 import { Course } from "@/model/course-model";
 import { Category } from "@/model/category-model";
 import { User } from "@/model/user-model";
 import { Testimonial } from "@/model/testimonial-model";
 import { Module } from "@/model/module.model";
+import { Lesson } from "@/model/lesson.model";
+import { Quizset } from "@/model/quizset-model";
+import { Quiz } from "@/model/quizzes-model";
 
-import {
-  replaceMongoIdInArray,
-  replaceMongoIdInObject,
-} from "@/lib/convertData";
+import { replaceMongoIdInArray, replaceMongoIdInObject } from "@/lib/convertData";
 
-import { dbConnect } from "@/service/mongo";
 import { getEnrollmentsForCourse } from "./enrollments";
 import { getTestimonialsForCourse } from "./testimonials";
 
 export async function getCourseList() {
-  await dbConnect();
-
-  try {
-    const courses = await Course.find({})
-      .select([
-        "title",
-        "subtitle",
-        "thumbnail",
-        "modules",
-        "price",
-        "category",
-        "instructor",
-        "testimonials",
-      ])
-      .populate({
+    const courses = await Course.find({active:true}).select(["title", "subtitle", "thumbnail", "modules", "price", "category", "instructor"]).populate({
         path: "category",
-        model: Category,
-      })
-      .populate({
+        model: Category
+    }).populate({
         path: "instructor",
-        model: User,
-      })
-      .populate({
+        model: User
+    }).populate({
         path: "testimonials",
-        model: Testimonial,
-      })
-      .populate({
+        model: Testimonial
+    }).populate({
         path: "modules",
-        model: Module,
-      })
-      .lean();
-
+        model: Module
+    }).lean();
     return replaceMongoIdInArray(courses);
-  } catch (error) {
-    console.error("Mama, course list query te jhamela hoise:", error);
-    return [];
-  }
 }
 
 export async function getCourseDetails(id) {
-  await dbConnect();
-
-  try {
     const course = await Course.findById(id)
-      .populate({
+    .populate({
         path: "category",
-        model: Category,
-      })
-      .populate({
+        model: Category
+    }).populate({
         path: "instructor",
-        model: User,
-      })
-      .populate({
+        model: User
+    }).populate({
         path: "testimonials",
         model: Testimonial,
         populate: {
-          path: "user",
-          model: User,
-        },
-      })
-      .populate({
+            path: "user",
+            model: User
+        }
+    }).populate({
         path: "modules",
         model: Module,
-      })
-      .lean();
+        populate: {
+            path: "lessonIds",
+            model: Lesson
+        }
+    }).populate({
+        path: "quizSet",
+        model: Quizset,
+        populate: {
+            path: "quizIds",
+            model: Quiz
+        }
+    }).lean();
 
-    return course ? replaceMongoIdInObject(course) : null;
-  } catch (error) {
-    console.error("Mama, single course query te jhamela hoise:", error);
-    return null;
-  }
+    return replaceMongoIdInObject(course)
 }
 
-export async function getCourseDetailsByInstructor(instructorId) {
-  await dbConnect();
+export async function getCourseDetailsByInstructor(instructorId, expand) {
+    const publishedCourses = await Course.find({instructor: instructorId, active:true}).lean();
 
-  const courses = await Course.find({ instructor: instructorId }).lean();
+    const enrollments = await Promise.all(
+        publishedCourses.map(async (course) => {
+          const enrollment = await getEnrollmentsForCourse(course._id.toString());
+          return enrollment;
+        })
+    );
 
-  const enrollments = await Promise.all(
-    courses.map(async (course) => {
-      return await getEnrollmentsForCourse(course._id.toString());
-    })
-  );
+    const groupedByCourses = Object.groupBy(enrollments.flat(), ({ course }) => course);
 
-  const totalEnrollments = enrollments.reduce((total, current) => {
-    return total + current.length;
-  }, 0);
+    const totalRevenue = publishedCourses.reduce((acc, course) => {
+        const quantity = groupedByCourses[course._id] ? groupedByCourses[course._id].length : 0;
+        return (acc + quantity * course.price)
+    }, 0);
 
-  const testimonials = await Promise.all(
-    courses.map(async (course) => {
-      return await getTestimonialsForCourse(course._id.toString());
-    })
-  );
+    const totalEnrollments = enrollments.reduce(function (acc, obj) {
+        return acc + obj.length;
+    }, 0)
 
-  const totalTestimonials = testimonials.flat();
+    const testimonials = await Promise.all(
+        publishedCourses.map(async (course) => {
+          const testimonial = await getTestimonialsForCourse(course._id.toString());
+          return testimonial;
+        })
+      );
 
-  const avgRating =
-    totalTestimonials.length > 0
-      ? totalTestimonials.reduce((acc, obj) => acc + obj.rating, 0) /
-        totalTestimonials.length
-      : 0;
+      const totalTestimonials = testimonials.flat();
+      const avgRating = (totalTestimonials.reduce(function (acc, obj) {
+            return acc + obj.rating;
+        }, 0)) / totalTestimonials.length;
 
-  return {
-    courses: courses.length,
-    enrollments: totalEnrollments,
-    reviews: totalTestimonials.length,
-    ratings: avgRating ? avgRating.toPrecision(2) : "0.0",
-  };
+    //console.log("testimonials", totalTestimonials, avgRating);
+    if (expand) {
+        const allCourses = await Course.find({instructor: instructorId}).lean();
+        return {
+            "courses": allCourses?.flat(),
+            "enrollments": enrollments?.flat(),
+            "reviews": totalTestimonials,
+        }
+    }
+    return {
+        "courses": publishedCourses.length,
+        "enrollments": totalEnrollments,
+        "reviews": totalTestimonials.length,
+        "ratings": avgRating.toPrecision(2),
+        "revenue": totalRevenue
+    }
+}
+
+export async function create(courseData) {
+    try{
+        const course =  await Course.create(courseData);
+        return JSON.parse(JSON.stringify(course));
+    } catch(err) {
+        throw new Error(err);
+    }
 }

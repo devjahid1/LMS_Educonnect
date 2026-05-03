@@ -3,20 +3,48 @@ import { Logo } from "./logo";
 
 export function SiteFooter({ className }) {
   return (
-    <footer className={cn("border-t bg-gray-50", className)}>
+    <footer className={cn(className)}>
       <div className="container flex flex-col items-center justify-between gap-4 py-10 md:h-24 md:flex-row md:py-0">
-        
-        {/* Left */}
-        <div className="flex flex-col items-center gap-3 md:flex-row md:gap-2">
+        <div className="flex flex-col items-center gap-4 px-8 md:flex-row md:gap-2 md:px-0">
           <Logo />
-          <p className="text-sm text-gray-600 text-center md:text-left">
-            Empowering developers to learn, build, and grow with modern technology.
+          <p className="text-center text-sm leading-loose md:text-left">
+            Built by{" "}
+            <a
+              href="#"
+              rel="noreferrer"
+              className="font-medium underline underline-offset-4"
+            >
+              shadcn
+            </a>
+            . Hosted on{" "}
+            <a
+              href="https://vercel.com"
+              target="_blank"
+              rel="noreferrer"
+              className="font-medium underline underline-offset-4"
+            >
+              Vercel
+            </a>
+            . Illustrations by{" "}
+            <a
+              href="https://popsy.co"
+              target="_blank"
+              rel="noreferrer"
+              className="font-medium underline underline-offset-4"
+            >
+              Popsy
+            </a>
+            . The source code is available on{" "}
+            <a
+              href="#"
+              target="_blank"
+              rel="noreferrer"
+              className="font-medium underline underline-offset-4"
+            >
+              GitHub
+            </a>
+            .
           </p>
-        </div>
-
-        {/* Right */}
-        <div className="text-sm text-gray-500 text-center md:text-right">
-          © {new Date().getFullYear()} <a href="https://jahid.me" target="_blank">jahid</a> All rights reserved.
         </div>
       </div>
     </footer>

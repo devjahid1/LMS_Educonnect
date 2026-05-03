@@ -7,111 +7,114 @@
   "password": "password123",
   "email": "john.doe@example.com",
   "phone": "+1234567890",
-  "role": "Teacher",
+  "role": "instructor",
   "bio": "Experienced educator passionate about fostering student learning and development.",
   "socialMedia": {
     "twitter": "@johndoe",
     "linkedin": "linkedin.com/in/johndoe",
     "facebook": "facebook.com/johndoe"
   },
-  "profilePicture": "https://example.com/profiles/johndoe.jpg"
-},
-{
-  "_id": {
-    "$oid": "663a06e7bfe65e5778eedf2b"
-  },
-  "firstName": "Alice",
-  "lastName": "Smith",
-  "password": "password456",
-  "email": "alice.smith@example.com",
-  "phone": "+1987654321",
-  "role": "Student",
-  "bio": "Enthusiastic learner eager to explore new horizons.",
-  "socialMedia": {
-    "twitter": "@alicesmith",
-    "linkedin": "linkedin.com/in/alicesmith",
-    "instagram": "@alicesmith"
-  },
-  "profilePicture": "https://example.com/profiles/alicesmith.jpg"
-},
-{
-  "_id": {
-    "$oid": "663a0b36bfe65e5778eedf7b"
-  },
-  "first_name": "John",
-  "last_name": "Doe",
-  "password": "password123",
-  "email": "john.doe@example.com",
-  "phone": "+1234567890",
-  "role": "Teacher",
-  "bio": "Experienced web developer with a passion for teaching.",
-  "social_media": {
-    "twitter": "https://twitter.com/johndoe",
-    "linkedin": "https://linkedin.com/in/johndoe"
-  },
-  "profile_picture": "https://example.com/profile_pictures/john_doe.jpg"
-},
-{
-  "_id": {
-    "$oid": "663a0b36bfe65e5778eedf7c"
-  },
-  "first_name": "Alice",
-  "last_name": "Smith",
-  "password": "pass@123",
-  "email": "alice.smith@example.com",
-  "phone": "+1987654321",
-  "role": "Teacher",
-  "bio": "Photography enthusiast and educator.",
-  "social_media": {
-    "instagram": "https://instagram.com/alicesmith",
-    "facebook": "https://facebook.com/alicesmithphotography"
-  },
-  "profile_picture": "https://example.com/profile_pictures/alice_smith.jpg"
-},
-{
-  "_id": {
-    "$oid": "663a0b36bfe65e5778eedf7d"
-  },
-  "first_name": "Emma",
-  "last_name": "Johnson",
-  "password": "1234pass",
-  "email": "emma.johnson@example.com",
-  "phone": "+1122334455",
-  "role": "Student",
-  "bio": "Aspiring data scientist eager to learn.",
-  "social_media": null,
-  "profile_picture": "https://example.com/profile_pictures/emma_johnson.jpg"
+  "profilePicture": "https://i.pravatar.cc",
+  "designation": "Senior Software Engineer, Dell Inc."
 },
 {
   "_id": {
     "$oid": "663a0b36bfe65e5778eedf7e"
   },
-  "first_name": "Michael",
-  "last_name": "Brown",
   "password": "securepassword",
   "email": "michael.brown@example.com",
   "phone": "+4455667788",
-  "role": "Student",
+  "role": "student",
   "bio": "Passionate about finance and investing.",
   "social_media": {
     "linkedin": "https://linkedin.com/in/michaelbrown"
   },
-  "profile_picture": "https://example.com/profile_pictures/michael_brown.jpg"
+  "designation": "Junior Develeoper, Acme",
+  "profilePicture": "https://i.pravatar.cc",
+  "firstName": "Michael",
+  "lastName": "Brown"
 },
 {
   "_id": {
-    "$oid": "663a0b36bfe65e5778eedf7f"
+    "$oid": "664accf41387e2ad2e8be488"
   },
-  "first_name": "Sophia",
-  "last_name": "Miller",
-  "password": "password1234",
-  "email": "sophia.miller@example.com",
-  "phone": "+3344556677",
-  "role": "Student",
-  "bio": "Enthusiastic about web development.",
+  "password": "securepassword",
+  "email": "alex.brown@example.com",
+  "phone": "+42255667788",
+  "role": "student",
+  "bio": "I love programming, I eat JavaScript",
   "social_media": {
-    "github": "https://github.com/sophiamiller",
-    "linkedin": "https://linkedin.com/in/sophiamiller"
+    "linkedin": "https://linkedin.com/in/alexbrown"
   },
-  "profile_picture": "https://example.com/profile_pictures/sophia_miller.jpg"
+  "designation": "Junior Develeoper, OpenText",
+  "profilePicture": "https://i.pravatar.cc",
+  "firstName": "Alex",
+  "lastName": "Brown"
+},
+{
+  "_id": {
+    "$oid": "664adddc1387e2ad2e8be4a0"
+  },
+  "password": "$2a$05$8B0y89Z7Gt/RlepneilmY.GRnX/G6O7RfvA61QpOG2M.H0r3PLdIG",
+  "email": "fatima.shekh@example.com",
+  "phone": "+88255667788",
+  "role": "student",
+  "bio": "love coding and game",
+  "social_media": {
+    "linkedin": "https://linkedin.com/in/fatima"
+  },
+  "designation": "Ghoral",
+  "profilePicture": "https://i.pravatar.cc",
+  "lastName": "Sheikh",
+  "firstName": "Fatima"
+},
+{
+  "_id": {
+    "$oid": "664d8582439c45ebdc6f0e26"
+  },
+  "firstName": "test",
+  "lastName": "test",
+  "password": "$2a$05$g1XX1jFI0nwRjCX2ORiCxuHYlyVep/G4Jcqw1u4Eyt4GrV86V938.",
+  "email": "test@test.com",
+  "role": "student",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66504f85171d3fa703e7e043"
+  },
+  "firstName": "Tapas",
+  "lastName": "Adhikary",
+  "password": "$2a$05$Kih1jnVYNDlNoABVmmxVceVnyY8Yr0kmOS6rIX/uzrWLBCQEi5i0S",
+  "email": "tapas.adhikary@gmail.com",
+  "role": "instructor",
+  "__v": 0,
+  "bio": "An educator for a decade and a life-long learner",
+  "designation": "Founder, tapaScript | Co-Founder, CreoWis | 20 Years in Software Development",
+  "profilePicture": "https://res.cloudinary.com/atapas/image/upload/v1646745540/profile/face_x0vrxt.jpg"
+},
+{
+  "_id": {
+    "$oid": "66504fc6171d3fa703e7e05b"
+  },
+  "firstName": "ReactPlay",
+  "lastName": "IO",
+  "password": "$2a$05$eGyHsDPi.Ib0DGPJPlSQd.XFxvp4bmp3SLu.T.A7eOR/2gXVMc6My",
+  "email": "ioreactplay@gmail.com",
+  "role": "student",
+  "__v": 0,
+  "profilePicture": "https://res.cloudinary.com/reactplay/image/upload/v1686126339/logos/twitter-thumb_fiuv8m.png",
+  "designation": "Open Source Project by Tapas",
+  "bio": "Having 1K+ Star"
+},
+{
+  "_id": {
+    "$oid": "66509f695f7ef01511c20c7b"
+  },
+  "firstName": "T",
+  "lastName": "H",
+  "password": "$2a$05$J3lCpL8ZLIhFW9.rwrDy6.UNqzhtEumUbyJ5SycwK/en5XBitf0Ia",
+  "email": "t@t.com",
+  "role": "instructor",
+  "__v": 0
 }]

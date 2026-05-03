@@ -6,40 +6,18 @@ import CourseDetails from "./_components/CourseDetails";
 import { getCourseDetails } from "@/queries/courses";
 import { replaceMongoIdInArray } from "@/lib/convertData";
 
-export const runtime = "nodejs";
+const SingleCoursePage = async ({params: {id}}) => {
+    const course = await getCourseDetails(id);
+    return (
+        <>
+            <CourseDetailsIntro course={course} />
 
-const SingleCoursePage = async ({ params }) => {
-  const { id } = params;
+            <CourseDetails course={course} />
 
-  if (!id || id === "undefined") {
-    return <div className="container py-10">Invalid course id</div>;
-  }
+            {course?.testimonials && <Testimonials testimonials={replaceMongoIdInArray(course?.testimonials)} />}
 
-  const course = await getCourseDetails(id);
-
-  if (!course) {
-    return <div className="container py-10">Course not found</div>;
-  }
-
-  return (
-    <>
-      <CourseDetailsIntro
-        title={course?.title}
-        subtitle={course?.subtitle}
-        thumbnail={course?.thumbnail}
-      />
-
-      <CourseDetails course={course} />
-
-      {course?.testimonials && (
-        <Testimonials
-          testimonials={replaceMongoIdInArray(course?.testimonials)}
-        />
-      )}
-
-      {/* <RelatedCourses /> */}
-    </>
-  );
+            {/*<RelatedCourses />*/}
+        </>
+    );
 };
-
 export default SingleCoursePage;
