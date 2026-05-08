@@ -1,5 +1,3 @@
-//import { CourseProgress } from "@/components/course-progress";
-
 import { getEnrollmentsForUser } from "@/queries/enrollments";
 import { auth } from "@/auth";
 
@@ -27,18 +25,30 @@ async function EnrolledCourses() {
         <div className="grid sm:grid-cols-2 gap-6">
             {enrollments && enrollments.length > 0 ? (
                 <>
-                    {enrollments.map((enrollment) => (
-                        <Link
-                            key={enrollment?.id}
-                            href={`/courses/${enrollment.course._id.toString()}/lesson`}>
-                            <EnrolledCourseCard
-                                enrollment={enrollment}
-                            />
-                        </Link>
-                    ))}
+                    {enrollments.map((enrollment) => {
+                        // handle both populated object and plain id
+                        const courseId =
+                            enrollment?.course?._id ||
+                            enrollment?.course?.id ||
+                            enrollment?.course;
+
+                        // skip invalid course
+                        if (!courseId) return null;
+
+                        return (
+                            <Link
+                                key={enrollment?.id}
+                                href={`/courses/${courseId.toString()}/lesson`}
+                            >
+                                <EnrolledCourseCard
+                                    enrollment={enrollment}
+                                />
+                            </Link>
+                        );
+                    })}
                 </>
             ) : (
-                <p> No Enrollments found!</p>
+                <p>No Enrollments found!</p>
             )}
         </div>
     );
